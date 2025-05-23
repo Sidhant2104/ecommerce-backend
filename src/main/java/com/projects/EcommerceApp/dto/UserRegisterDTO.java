@@ -3,10 +3,10 @@ package com.projects.EcommerceApp.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 
 public class UserRegisterDTO {
-    @NotBlank(message = "name is required")
+
+    @NotBlank(message = "Name is required")
     private String name;
 
     @Email(message = "Email should be valid")
@@ -14,20 +14,18 @@ public class UserRegisterDTO {
     private String email;
 
     @NotBlank(message = "Password is required")
-    @Size(min = 6, message = "Password must be at least 6 characters")
     @Pattern(
             regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$",
             message = "Password must be at least 8 characters long, and include uppercase, lowercase, and a number"
     )
     private String password;
 
-    // Getters and setters
-
+    // Getters and Setters
     public String getName() {
         return name;
     }
 
-    public void setUsername(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 

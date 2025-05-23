@@ -23,4 +23,6 @@ public interface UserService {
     // * GET Users by ID:
     public User getUserById(@PathVariable long id);
 
+    // * Delete User by ID:
+    public void deleteUserById(@PathVariable long id);
 }

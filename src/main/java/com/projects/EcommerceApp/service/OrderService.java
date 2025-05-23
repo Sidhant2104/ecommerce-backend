@@ -1,6 +1,9 @@
 package com.projects.EcommerceApp.service;
 
 import com.projects.EcommerceApp.dto.OrderDTO;
+import com.projects.EcommerceApp.dto.OrderRequestDTO;
+import com.projects.EcommerceApp.model.OrderRequest;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,4 +17,6 @@ public interface OrderService {
     List<OrderDTO> getAllOrders();
 
     List<OrderDTO> getOrderByUser(Long userId);
+
+    OrderRequest convertDtoToEntity(@Valid OrderRequestDTO orderRequestDTO);
 }

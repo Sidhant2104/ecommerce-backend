@@ -1,10 +1,8 @@
 package com.projects.EcommerceApp.service;
 import com.projects.EcommerceApp.dto.OrderDTO;
 import com.projects.EcommerceApp.dto.OrderItemsDTO;
-import com.projects.EcommerceApp.model.OrderItems;
-import com.projects.EcommerceApp.model.Orders;
-import com.projects.EcommerceApp.model.Product;
-import com.projects.EcommerceApp.model.User;
+import com.projects.EcommerceApp.dto.OrderRequestDTO;
+import com.projects.EcommerceApp.model.*;
 import com.projects.EcommerceApp.repository.OrderRepository;
 import com.projects.EcommerceApp.repository.ProductRepository;
 import com.projects.EcommerceApp.repository.UserRepository;
@@ -50,10 +48,26 @@ public class OrderServiceImpl implements OrderService{
             orderItemsDTOS.add(new OrderItemsDTO(product.getName(), product.getPrice(), entry.getValue()));
         }
 
+
         order.setOrderItems(orderItems);
         Orders saveOrder = orderRepo.save(order);
-        return new OrderDTO(saveOrder.getId(), saveOrder.getTotalAmount(), saveOrder.getStatus(), saveOrder.getOrderDate(),orderItemsDTOS);
+
+        return new OrderDTO(saveOrder.getId(),
+                saveOrder.getTotalAmount(),
+                saveOrder.getStatus(),
+                saveOrder.getOrderDate(),
+                user.getName(),
+                user.getEmail(),
+                orderItemsDTOS);
     }
+
+    public OrderRequest convertDtoToEntity(OrderRequestDTO orderRequestDTO) {
+        OrderRequest orderRequest = new OrderRequest();
+        orderRequest.setProductQuantities(orderRequestDTO.getProductQuantities());
+        orderRequest.setTotalAmount(orderRequestDTO.getTotalAmount());
+        return orderRequest;
+    }
+
 
 
     public List<OrderDTO> getAllOrders(){

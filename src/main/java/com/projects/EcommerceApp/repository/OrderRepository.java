@@ -13,10 +13,5 @@ public interface OrderRepository extends JpaRepository<Orders, Long> {
 
     @Query("SELECT  o FROM Orders o JOIN FETCH o.user") // This is JPQL language
     List<Orders> findAllOrdersWithUsers();
-
-
-
-
-
     List<Orders> findByUser(User user);
 }

@@ -1,8 +1,10 @@
 package com.projects.EcommerceApp.controller;
 
 import com.projects.EcommerceApp.dto.OrderDTO;
+import com.projects.EcommerceApp.dto.OrderRequestDTO;
 import com.projects.EcommerceApp.model.OrderRequest;
 import com.projects.EcommerceApp.service.OrderService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,9 +19,11 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping("/place/{userId}")
-    public OrderDTO placeOrder(@PathVariable Long userId, @RequestBody OrderRequest orderRequest){
-        return orderService.placeOrder(userId,orderRequest.getProductQuantities(),orderRequest.getTotalAmount());
+    public OrderDTO placeOrder(@PathVariable Long userId, @Valid @RequestBody OrderRequestDTO orderRequestDTO){
+        OrderRequest orderRequest = orderService.convertDtoToEntity(orderRequestDTO); // ✅ Corrected method name
+        return orderService.placeOrder(userId, orderRequest.getProductQuantities(), orderRequest.getTotalAmount());
     }
+
 
     @GetMapping("/getAllOrders")
     public List<OrderDTO> getAllOrders(){

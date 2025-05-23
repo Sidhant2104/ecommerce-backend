@@ -6,6 +6,7 @@ import com.projects.EcommerceApp.model.User;
 import com.projects.EcommerceApp.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // * CREATE or SAVE/REGISTER a user
     @PostMapping("/register")
     public User registerUser(@Valid @RequestBody UserRegisterDTO userRegisterDTO) {
         User user = new User();
@@ -48,5 +48,13 @@ public class UserController {
     public User getUserById(@PathVariable long id) {
         return userService.getUserById(id);
     }
+
+    // * Delete User by ID:
+    @DeleteMapping("/deleteUser/{id}")
+    public ResponseEntity<String> deleteUserById(@PathVariable long id) {
+        userService.deleteUserById(id);
+        return ResponseEntity.ok("User with Id:" + id + " is deleted successfully");
+    }
+
 
 }
