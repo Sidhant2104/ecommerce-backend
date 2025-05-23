@@ -1,7 +1,10 @@
 package com.projects.EcommerceApp.controller;
 
+import com.projects.EcommerceApp.dto.LoginDTO;
+import com.projects.EcommerceApp.dto.UserRegisterDTO;
 import com.projects.EcommerceApp.model.User;
 import com.projects.EcommerceApp.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,15 +20,22 @@ public class UserController {
 
     // * CREATE or SAVE/REGISTER a user
     @PostMapping("/register")
-    public User registerUser(@RequestBody User user) {
+    public User registerUser(@Valid @RequestBody UserRegisterDTO userRegisterDTO) {
+        User user = new User();
+        user.setName(userRegisterDTO.getName());
+        user.setEmail(userRegisterDTO.getEmail());
+        user.setPassword(userRegisterDTO.getPassword());
+
         return userService.registerUser(user);
     }
 
+
     // * LOGIN using email and password:
     @PostMapping("/login")
-    public User loginUser(@RequestBody User user) {
-        return userService.loginUser(user.getEmail(), user.getPassword());
+    public User loginUser(@Valid @RequestBody LoginDTO loginDTO) {
+        return userService.loginUser(loginDTO.getEmail(), loginDTO.getPassword());
     }
+
 
     //* GET ALL users saved in the database:
     @GetMapping("/getAll")
@@ -34,8 +44,9 @@ public class UserController {
     }
 
     // * GET User by ID:
-    @GetMapping("/getUserById")
-    public User getUserById(@PathVariable long id){
+    @GetMapping("/getUserById/{id}")
+    public User getUserById(@PathVariable long id) {
         return userService.getUserById(id);
     }
+
 }
