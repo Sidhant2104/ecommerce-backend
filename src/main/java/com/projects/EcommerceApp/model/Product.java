@@ -1,9 +1,9 @@
 package com.projects.EcommerceApp.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Product {
@@ -20,6 +20,9 @@ public class Product {
     private String imageUrl;
 
     private String category;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartItems> cartItems = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -67,5 +70,13 @@ public class Product {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public List<CartItems> getCartItems() {
+        return cartItems;
+    }
+
+    public void setCartItems(List<CartItems> cartItems) {
+        this.cartItems = cartItems;
     }
 }

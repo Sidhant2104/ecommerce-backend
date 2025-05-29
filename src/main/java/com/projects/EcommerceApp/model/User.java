@@ -5,11 +5,15 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.hibernate.engine.internal.Cascade;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class User {
+public class
+
+User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -21,6 +25,11 @@ public class User {
     @JsonIgnore // Because we dont want the ordres detail to be printed when trying to access for User
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Orders> orders;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Cart> carts = new ArrayList<>();
+
 
     public long getId() {
         return id;
@@ -62,5 +71,21 @@ public class User {
     }
     public User(){
         // Default Constructor
+    }
+
+    public List<Orders> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Orders> orders) {
+        this.orders = orders;
+    }
+
+    public List<Cart> getCarts() {
+        return carts;
+    }
+
+    public void setCarts(List<Cart> carts) {
+        this.carts = carts;
     }
 }
